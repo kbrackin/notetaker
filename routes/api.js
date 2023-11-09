@@ -26,4 +26,18 @@ app.post('/notes', (req, res) => {
     res.json(savedNotes)
 })
 
+app.delete('/notes/:id', (req, res) => {
+    let noteIndex = savedNotes.findIndex(index =>
+        index.id == req.params.id)
+        savedNotes.splice(noteIndex, 1);
+        fs.writeFile('./db/db.json', JSON.stringify(savedNotes), function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(`Note has been deleted successfully.`)
+            }
+        })
+    
+    res.json(savedNotes);
+})
 module.exports = app
